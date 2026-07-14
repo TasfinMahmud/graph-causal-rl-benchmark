@@ -1,0 +1,61 @@
+# Implementation Details - Exhaustive Hyperparameter Configurations
+# As claimed in the main paper (Section IV.C)
+
+global:
+  random_seed: 42
+  data_split:
+    train_ratio: 0.8
+    val_ratio: 0.1
+    test_ratio: 0.1
+
+gnn_embeddings:
+  model: "LightGCN"
+  latent_dimensions: 64
+  message_passing_layers: 3
+  optimizer: "Adam"
+  learning_rate: 1.0e-3
+  batch_size: 1024
+  epochs: 50
+  early_stopping:
+    metric: "validation_bpr_loss"
+    patience: 10
+
+causal_inference:
+  model: "X-Learner"
+  base_learner: "RandomForestRegressor"
+  propensity_model: "LogisticRegression"
+
+offline_rl:
+  bcq:
+    q_network:
+      architecture: "MLP"
+      layers: 2
+      hidden_units: 256
+    generative_model:
+      architecture: "MLP"
+      layers: 2
+      hidden_units: 256
+    training:
+      epochs: 100
+      learning_rate: 3.0e-4
+      batch_size: 256
+  
+  cql:
+    q_network:
+      architecture: "MLP"
+      layers: 2
+      hidden_units: 256
+    training:
+      epochs: 100
+      learning_rate: 1.0e-4
+      batch_size: 256
+
+  iql:
+    q_network:
+      architecture: "MLP"
+      layers: 2
+      hidden_units: 256
+    training:
+      epochs: 100
+      learning_rate: 3.0e-4
+      batch_size: 256
